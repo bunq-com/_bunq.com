@@ -93,6 +93,12 @@ $('#continue-reported-bunqer').on('click', function () {
   var reportedBunqerBunqme = $('#reported-bunqer_bunqme').val();
   var reportedBunqerIban = $('#reported-bunqer_iban').val();
 
+  if ((reportedBunqerEmail = !null)) {
+    if (!validateEmail(reportedBunqerEmail)) {
+      $('#reported-bunqer_email').siblings('.field-form-alert').show();
+      $('#reported-bunqer_email').addClass('required');
+    }
+  }
   if (!reportedBunqerName) {
     $('#reported-bunqer_name').addClass('required');
   }
@@ -522,16 +528,16 @@ $('input[name=Police-Report]:radio').on('click', function () {
 // Submit button
 $('#report-form_submit').prop('disabled', true);
 
-$('#submit-buttons-wrapper').on('mouseenter', () => {
-  if (
-    $('#checkbox_terms-report').prop('checked') === false ||
-    $('#checkbox_terms-complaint').prop('checked') === false
-  ) {
-    $('#final-step').find('.error-message').show();
-  }
-});
-
 if (complaintCountry === 'ES') {
+  $('#submit-buttons-wrapper').on('mouseenter', () => {
+    if (
+      $('#checkbox_terms-report').prop('checked') === false ||
+      $('#checkbox_terms-complaint').prop('checked') === false
+    ) {
+      $('#final-step').find('.error-message').show();
+    }
+  });
+
   $('#checkbox_terms-complaint').on('change', () => {
     if (
       $('#checkbox_terms-report').prop('checked') === true &&
@@ -562,6 +568,12 @@ if (complaintCountry === 'ES') {
     }
   });
 } else {
+  $('#submit-buttons-wrapper').on('mouseenter', () => {
+    if ($('#checkbox_terms-report').prop('checked') === false) {
+      $('#final-step').find('.error-message').show();
+    }
+  });
+
   $('#checkbox_terms-report').on('change', (event) => {
     if (event.target.checked) {
       $('#final-step').find('.error-message').hide();
