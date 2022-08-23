@@ -1,0 +1,4 @@
+/* Needed to avoid glitch on Global CSS symbol script */
+section {
+    opacity: 0;
+}
