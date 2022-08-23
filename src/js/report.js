@@ -1,5 +1,3 @@
-console.log('Hello world!');
-
 // Hide all steps and error message
 $('#reported-bunqer').hide();
 $('#reported-ext-fraud').hide();
