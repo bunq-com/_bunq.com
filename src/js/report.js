@@ -20,7 +20,7 @@ $('#incident_situation').on('change', function () {
 });
 
 // Set variable for country of complaint
-var complaintCountry = $('#complaint_country').val();
+let complaintCountry = $('#complaint_country').val();
 
 $('#complaint_country').on('change', function () {
   complaintCountry = $('#complaint_country').val();
@@ -527,15 +527,6 @@ $('input[name=Police-Report]:radio').on('click', function () {
 $('#report-form_submit').prop('disabled', true);
 
 if (complaintCountry === 'ES') {
-  $('#submit-buttons-wrapper').on('mouseenter', () => {
-    if (
-      $('#checkbox_terms-report').prop('checked') === false ||
-      $('#checkbox_terms-complaint').prop('checked') === false
-    ) {
-      $('#final-step').find('.error-message').show();
-    }
-  });
-
   $('#checkbox_terms-complaint').on('change', () => {
     if (
       $('#checkbox_terms-report').prop('checked') === true &&
@@ -566,12 +557,6 @@ if (complaintCountry === 'ES') {
     }
   });
 } else {
-  $('#submit-buttons-wrapper').on('mouseenter', () => {
-    if ($('#checkbox_terms-report').prop('checked') === false) {
-      $('#final-step').find('.error-message').show();
-    }
-  });
-
   $('#checkbox_terms-report').on('change', (event) => {
     if (event.target.checked) {
       $('#final-step').find('.error-message').hide();

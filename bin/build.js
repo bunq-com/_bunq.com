@@ -5,7 +5,18 @@ const buildDirectory = 'dist';
 const production = process.env.NODE_ENV === 'production';
 
 // Config entrypoint files
-const entryPoints = ['src/index.ts'];
+const entryPoints = [
+  'src/css/datepicker.css',
+  'src/css/style.css',
+  'src/js/datepicker.js',
+  'src/js/eCookies.js',
+  'src/js/event.js',
+  'src/js/main.js',
+  'src/js/mCookies.js',
+  'src/js/overrider.js',
+  'src/js/report.js',
+  'src/js/tooltip.js',
+];
 
 /**
  * Default Settings

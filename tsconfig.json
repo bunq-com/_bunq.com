@@ -4,7 +4,8 @@
     "rootDir": ".",
     "baseUrl": "./",
     "paths": {
-      "$utils/*": ["src/utils/*"]
+      "$js/*": ["src/js/*"],
+      "$css/*": ["src/css/*"],
     }
   }
 }
