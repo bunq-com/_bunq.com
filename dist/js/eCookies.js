@@ -1,0 +1,1 @@
+"use strict";(()=>{(async()=>{let e="alertClosed";typeof Cookies.get(e)!="undefined"&&$(".alert-incident_component").remove(),$(".alert-incident_close-btn").on("click",function(){Cookies.set(e,"yes",{expires:7})})})();})();
