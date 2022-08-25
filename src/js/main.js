@@ -192,8 +192,6 @@ for (const utm_element of utmParameters) {
 
 // BANNER MANAGEMENT
 (async () => {
-  // hide incident banner
-  $('#alert-incident').hide();
   // fetch endpoint, checks for api validation
   const response = await fetch(
     `https://api.web.${
@@ -212,6 +210,7 @@ for (const utm_element of utmParameters) {
   }
   // hide news banner and get message
   $('#alert-news').hide();
+  $('#hidden').removeClass('hide');
   $('#incident-message').text(incident.user_message_incident_ongoing);
   // if link is present, get link, else hide text block
   if (incident.incident_link) {
