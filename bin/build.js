@@ -16,6 +16,7 @@ const entryPoints = [
   'src/js/overrider.js',
   'src/js/report.js',
   'src/js/tooltip.js',
+  'src/js/tabsCard.js',
 ];
 
 /**
