@@ -1,4 +1,5 @@
-// Hide all steps and error message
+// Hide all steps and messages
+$('#complaint-guidance').hide();
 $('#reported-bunqer').hide();
 $('#reported-ext-fraud').hide();
 $('#complaint-reporter').hide();
@@ -13,7 +14,7 @@ $('.error-message').hide();
 $('.field-form-alert').hide();
 
 // Set variable for situation
-var incidentSituation = $('#incident_situation').val();
+let incidentSituation = $('#incident_situation').val();
 
 $('#incident_situation').on('change', function () {
   incidentSituation = $('#incident_situation').val();
@@ -38,7 +39,18 @@ function validateEmail($email) {
   return emailReg.test($email);
 }
 
-// Conditional logic for navigation buttons
+// Conditional logic for screens
+
+// Intro form - about the situation screen
+
+$('#incident_situation').on('change', function () {
+  if (incidentSituation === 'complaint') {
+    $('#complaint-guidance').slideDown('200', 'easeOutQuad');
+  } else {
+    $('#complaint-guidance').slideUp('100', 'easeInQuad');
+  }
+});
+
 $('#continue-basic-info').on('click', function () {
   var contactName = $('#contact_name').val();
   var contactEmail = $('#contact_email').val();
@@ -59,6 +71,7 @@ $('#continue-basic-info').on('click', function () {
     $('#basic-info').hide();
     $('.error-message').hide();
     $('input').removeClass('required');
+
     if (incidentSituation === 'bunq-scammer') {
       $('#reported-bunqer').show();
     }
@@ -77,6 +90,7 @@ $('#continue-basic-info').on('click', function () {
   }
 });
 
+//
 $('#previous-reported-bunqer').on('click', function () {
   $('#reported-bunqer').hide();
   $('#basic-info').show();
@@ -190,20 +204,57 @@ $('#previous-complaint-reporter').on('click', function () {
   $('#basic-info').show();
 });
 
-$('#continue-complaint-reporter').on('click', function () {
-  var complaintBunqUser = $('input[name="Complaint-bunq-User"]:checked').val();
+// Complaint form - about you screen
+
+// Set varibles for radio buttons
+let complaintContactSupport = $('input[name="Complaint-Contact-Support"]:checked').val();
+let complaintSupportReply = $('input[name="Complaint-Support-Reply"]:checked').val();
+let complaintBunqUser = $('input[name="Complaint-bunq-User"]:checked').val();
+
+$('input[name="Complaint-Contact-Support"]').on('change', function () {
+  complaintContactSupport = $('input[name="Complaint-Contact-Support"]:checked').val();
+
+  if (complaintContactSupport !== 'yes') {
+    $('#continue-complaint-reporter').siblings('#error-support-contact').show();
+  } else {
+    $('#error-support-contact').hide();
+  }
+});
+
+$('input[name="Complaint-Support-Reply"]').on('change', function () {
+  complaintSupportReply = $('input[name="Complaint-Support-Reply"]:checked').val();
+
+  if (complaintSupportReply !== 'yes') {
+    $('#continue-complaint-reporter').siblings('#error-no-reply').show();
+  } else {
+    $('#error-no-reply').hide();
+  }
+});
+
+$('input[name="Complaint-bunq-User"]').on('change', function () {
+  complaintBunqUser = $('input[name="Complaint-bunq-User"]:checked').val();
 
   if (complaintBunqUser !== 'yes') {
-    $('#continue-complaint-reporter').siblings('.error-message').show();
+    $('#continue-complaint-reporter').siblings('#error-no-bunq-user').show();
   } else {
+    $('#error-no-bunq-user').hide();
+  }
+});
+
+$('#continue-complaint-reporter').on('click', function () {
+  if (
+    complaintContactSupport === 'yes' &&
+    complaintSupportReply === 'yes' &&
+    complaintBunqUser === 'yes'
+  ) {
     $('#complaint-reporter').hide();
-    $('.error-message').hide();
     $('input').removeClass('required');
     $('#bunq-account').show();
     $('#account-type').show();
   }
 });
 
+//
 $('#previous-bunq-account').on('click', function () {
   $('#bunq-account').hide();
   if (incidentSituation === 'complaint') {
