@@ -17,6 +17,7 @@ const entryPoints = [
   'src/js/report.js',
   'src/js/tooltip.js',
   'src/js/tabsCard.js',
+  'src/js/blogSection.js',
 ];
 
 /**
