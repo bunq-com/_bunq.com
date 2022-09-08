@@ -97,7 +97,7 @@ window.onload = function () {
     }
   }
 
-  // Paid marketing script
+  // Adjust link with Paid Marketing UTM parameters.
   if (
     [
       'xzd89c',
@@ -143,10 +143,11 @@ window.onload = function () {
       button.href = `https://app.adjust.com/dqvbt6?${allUrlParameter.toString()}`;
     });
   } else {
-    // Organic Adjust link.
+    // Adjust link for organic traffic.
     const allSignupButton = document.querySelectorAll("a[href^='https://app.adjust.com/']"); // a-tags that start with this link.
     allSignupButton.forEach((button) => {
       const allUrlParameter = new URLSearchParams();
+      allUrlParameter.set('engagement_type', `fallback_click`);
 
       if (pathNameEncoded) allUrlParameter.set('label', pathNameEncoded);
 
