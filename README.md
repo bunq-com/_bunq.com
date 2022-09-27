@@ -1,12 +1,10 @@
-# Finsweet Developer Starter
+# bunq.com custom code
 
-A starter template for both Client & Power projects.
+Welcome! In this repository, we store the custom code snippets that we use on bunq.com and its' subdomains. If there is a snippet that needs to be used on more than one place throughout the website, it's time to create a file and add it here.
 
-Before starting to work with this template, please take some time to read through the documentation.
+## Table of contents
 
-## Reference
-
-- [Included tools](#included-tools)
+- [Used tools](#used-tools)
 - [Requirements](#requirements)
 - [Getting started](#getting-started)
   - [Installing](#installing)
@@ -21,9 +19,9 @@ Before starting to work with this template, please take some time to read throug
   - [Continuous Deployment](#continuous-deployment)
   - [How to automatically deploy updates to npm](#how-to-automatically-deploy-updates-to-npm)
 
-## Included tools
+## Used tools
 
-This template contains some preconfigured development tools:
+Here's the development tools used in this repository:
 
 - [Typescript](https://www.typescriptlang.org/): A superset of Javascript that adds an additional layer of Typings, bringing more security and efficiency to the written code.
 - [Prettier](https://prettier.io/): Code formatting that assures consistency across all Finsweet's projects.
@@ -35,7 +33,7 @@ This template contains some preconfigured development tools:
 
 ## Requirements
 
-This template requires the use of [pnpm](https://pnpm.js.org/en/). You can [install pnpm](https://pnpm.io/installation) with:
+This repository requires the use of [pnpm](https://pnpm.js.org/en/). You can [install pnpm](https://pnpm.io/installation) with:
 
 ```bash
 npm i -g pnpm
@@ -45,13 +43,11 @@ To enable automatic deployments to npm, please read the [Continuous Deployment](
 
 ## Getting started
 
-The quickest way to start developing a new project is by [creating a new repository from this template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template#creating-a-repository-from-a-template).
-
-Once the new repository has been created, update the `package.json` file with the correct information, specially the name of the package which has to be unique.
+The quickest way to start developing a new project is by cloning this repository to your local computer using GitHub Desktop.
 
 ### Installing
 
-After creating the new repository, open it in your terminal and install the packages by running:
+After cloning the repository, open it in your terminal and install the packages by running:
 
 ```bash
 pnpm install
@@ -217,3 +213,28 @@ This npm token should be:
 Once you're logged into the npm account, you can get an access token by following [this guide](https://docs.npmjs.com/creating-and-viewing-access-tokens).
 
 The access token must be then placed in a [repository secret](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-encrypted-secrets-for-your-repository-and-organization-for-codespaces#adding-secrets-for-a-repository) named `NPM_TOKEN`.
+
+## Moving to production
+
+Be careful to remember to change the script once the development is finished and sent to production. Replace the whole script above with this:
+
+  ```html
+  <script src="https://cdn.jsdelivr.net/gh/bunq-website/bunq.com/js/main.js"></script>
+  ```
+
+## CDN for performance
+
+As you see, you source a file from this repository as you would any other script or stylesheet in _Webflow_. We use a CDN called _jsDeliver_ to serve our files for the best performance. To get the URL for a file, use the following logic: `https://cdn.jsdelivr.net/gh/user/repo/file`. For example, to get the `main.js` file, your URL would be `https://cdn.jsdelivr.net/gh/bunq-website/bunq.com/js/main.js`.
+
+This would make your sourcing tag for a JS script look like:
+`<script type="module" src="https://cdn.jsdelivr.net/gh/bunq-website/bunq.com/js/main.js"></script>`
+
+And here's a CSS stylesheet:
+`<link rel="stylesheet" href="https://bunq-website.github.io/bunq.com/css/style.css">`
+
+## GitHub Pages
+If for any reason the CDN is not working, or changes aren't reflected fast enough using the CDN, we also have _GitHub Pages_ enabled as a back up. The structure for those URLs would be: `https://bunq-website.github.io/bunq.com/js/main.js`.
+
+# Questions
+
+If you have any questions, please poke @gsotgiu or @joshua on Slack!
