@@ -4,15 +4,15 @@ $('.form_error-instruction').hide();
 $('.form_error-message').hide();
 $('.form_error').hide();
 
-// CREATE AND CALL FUNCTION TO ADD REQUIRED CLASS TO- AND SHOW ERROR FOR EMPTY INPUTS ON BUTTON CLICK
-// Create "checkInputs" function
+// HANDLING INPUTS
+// Create function to add required class to- and show error for empty inputs
 function checkInputs() {
   $("input[type='text'], input[type='number'], input[type='email'], textarea")
     .filter(':visible')
     .each(function () {
       if (!$(this).val()) {
         $(this).addClass('required');
-        $(this).closest('.form_section').find('.form_error').show();
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
   $("input[type='tel']")
@@ -20,7 +20,7 @@ function checkInputs() {
     .each(function () {
       if (!$(this).val()) {
         $(this).closest('.field-phone_wrapper').addClass('required');
-        $(this).closest('.form_section').find('.form_error').show();
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
   $("input[type='radio']")
@@ -31,7 +31,7 @@ function checkInputs() {
       if (inputValue === undefined) {
         $(this).closest('.form_options').find('.form_radio-icon').addClass('required');
         $(this).closest('.form_radio-card').addClass('required');
-        $(this).closest('.form_section').find('.form_error').show();
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
   $("input[type='checkbox']")
@@ -39,7 +39,7 @@ function checkInputs() {
     .each(function () {
       if (!$(this).is(':checked')) {
         $(this).siblings('.form_checkbox-icon').addClass('required');
-        $(this).closest('.form_section').find('.form_error').show();
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
   $("input[type='file']")
@@ -47,41 +47,27 @@ function checkInputs() {
     .each(function () {
       if (!$(this).val()) {
         $(this).siblings('.file-upload').addClass('required');
-        $(this).closest('.form_section').find('.form_error').show();
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
 }
 
-// Call "checkInputs" function on click of any "continue" button
-$('*[id*=continue]').on('click', function () {
-  checkInputs();
+// Remove required class from input when clicked and remove errors
+$('input, textarea, .form_radio').on('click', function () {
+  $(this).closest('.form_field').find('*[class*=required]').removeClass('required');
+  $('*[class*=form_error]').slideUp('100', 'easeInQuad');
 });
 
-// CREATE AND RUN FUNCTION TO REMOVE REQUIRED CLASS AND REMOVE ERRORS ON INPUT AND BUTTON CLICK
-// Create function to reset inputs and remove errors
-function resetInputs() {
-  $('*[class*=required]').removeClass('required');
-  $('*[class*=form_error]').hide();
-}
-
-// Call "resetInputs" function on input click
-$('input, textarea').on('click', function () {
-  resetInputs();
+// Remove required class from radio cards on selection
+$('.form_radio-card').on('click', function () {
+  $('.form_radio-card-grid').find('.form_radio-card').removeClass('required');
+  $('*[class*=form_error]').slideUp('100', 'easeInQuad');
 });
 
-// Call "resetInputs" function on radio button click
-$('.form_radio-icon').on('click', function () {
-  resetInputs();
-});
-
-// Click radio button on click of parent div including label
-$('.form-radio').on('click', function () {
-  $(this).find('.form_radio-icon').click();
-});
-
-// Call "resetInputs" function on click of any "previous" button
+// Remove required class from all fields on "previous" button click
 $('*[id*=previous]').on('click', function () {
-  resetInputs();
+  $('*[class*=required]').removeClass('required');
+  $('*[class*=form_error]').slideUp('100', 'easeInQuad');
 });
 
 // STEP: SITUATION
@@ -91,14 +77,13 @@ $('#situation').show();
 // Create "situation" variable
 var situation = $('input[name="Situation"]:checked').val();
 
-// Update "situation" variable on change of radio button value
+// Update "situation" variable on change of radio value
 $('input[name="Situation"]').on('change', function () {
   situation = $('input[name="Situation"]:checked').val();
 });
 
 // Remove borders from radio cards and add border to selected radio card on change
 $('input[name="Situation"]').on('change', function () {
-  $('input[name="Situation"]').closest('.form_radio-card').removeClass('required');
   $('input[name="Situation"]').closest('.form_radio-card').removeClass('checked');
   $('input[name="Situation"]:checked').closest('.form_radio-card').addClass('checked');
 });
@@ -114,21 +99,20 @@ $('#continue-situation').on('click', function () {
       if (!bunqUser) {
         $('#field_contact_email').hide();
         $('#field_account_email').hide();
-      }
-      if (bunqUser === 'yes') {
+      } else if (bunqUser === 'yes') {
         $('#field_contact_email').hide();
         $('#field_account_email').show();
-      }
-      if (bunqUser === 'no') {
+      } else if (bunqUser === 'no') {
         $('#field_contact_email').show();
         $('#field_account_email').hide();
       }
-    }
-    if (situation === 'hacked') {
+    } else if (situation === 'hacked') {
       $('#field_bunq-user').hide();
       $('#field_contact_email').hide();
       $('#field_account_email').show();
     }
+  } else {
+    checkInputs();
   }
 });
 
@@ -136,7 +120,7 @@ $('#continue-situation').on('click', function () {
 // Create "bunqUser" variable
 var bunqUser = $('input[name="bunq-User"]:checked').val();
 
-// Update "bunqUser" variable on change of radio button value
+// Update "bunqUser" variable on change of radio value
 $('input[name="bunq-User"]').on('change', function () {
   bunqUser = $('input[name="bunq-User"]:checked').val();
 });
@@ -146,8 +130,7 @@ $('input[name="bunq-User"]').on('change', function () {
   if (bunqUser === 'yes') {
     $('#field_contact_email').hide();
     $('#field_account_email').show();
-  }
-  if (bunqUser === 'no') {
+  } else if (bunqUser === 'no') {
     $('#field_contact_email').show();
     $('#field_account_email').hide();
   }
@@ -165,45 +148,80 @@ $('#continue-contact').on('click', function () {
   var contactEmail = $('#contact_email').val();
   var accountEmail = $('#account_email').val();
 
-  if (situation === 'fraud' || situation === 'phishing' || situation === 'complaint') {
+  if (situation === 'fraud') {
     if (bunqUser === 'yes') {
-      if (contactName && accountEmail) {
-        $('#contact').hide();
-        if (situation === 'fraud') {
-          $('#transaction').show();
-        }
-        if (situation === 'phishing') {
-          $('#phishing').show();
-        }
-        if (situation === 'complaint') {
-          $('#complaint').show();
-          $('#submit').show();
-        }
-      }
       if (!accountEmail) {
         $('#contact_email-error').show();
       }
-    }
-    if (bunqUser === 'no') {
+      if (contactName && accountEmail) {
+        $('#contact').hide();
+        $('#transaction').show();
+      } else {
+        checkInputs();
+      }
+    } else if (bunqUser === 'no') {
       if (contactName && contactEmail) {
         $('#contact').hide();
-        if (situation === 'fraud') {
-          $('#transaction').show();
-        }
-        if (situation === 'phishing') {
-          $('#phishing').show();
-        }
-        if (situation === 'complaint') {
-          $('#complaint').show();
-          $('#submit').show();
-        }
+        $('#transaction').show();
+      } else {
+        checkInputs();
       }
+    } else {
+      checkInputs();
     }
-  }
-  if (situation === 'hacked') {
+  } else if (situation === 'phishing') {
+    if (bunqUser === 'yes') {
+      if (!accountEmail) {
+        $('#contact_email-error').show();
+      }
+      if (contactName && accountEmail) {
+        $('#contact').hide();
+        $('#phishing').show();
+      } else {
+        checkInputs();
+      }
+    } else if (bunqUser === 'no') {
+      if (contactName && contactEmail) {
+        $('#contact').hide();
+        $('#phishing').show();
+      } else {
+        checkInputs();
+      }
+    } else {
+      checkInputs();
+    }
+  } else if (situation === 'complaint') {
+    if (bunqUser === 'yes') {
+      if (!accountEmail) {
+        $('#contact_email-error').show();
+      }
+      if (contactName && accountEmail) {
+        $('#contact').hide();
+        $('#complaint').show();
+        $('#submit').show();
+      } else {
+        checkInputs();
+      }
+    } else if (bunqUser === 'no') {
+      if (contactName && contactEmail) {
+        $('#contact').hide();
+        $('#complaint').show();
+        $('#submit').show();
+      } else {
+        checkInputs();
+      }
+    } else {
+      checkInputs();
+    }
+  } else if (situation === 'hacked') {
+    if (!accountEmail) {
+      $('#contact_email-error').show();
+    }
     if (contactName && accountEmail) {
       $('#contact').hide();
       $('#hacked').show();
+    } else {
+      checkInputs();
     }
   }
 });
@@ -225,15 +243,13 @@ $('input[name="Transaction-Type"]').on('change', function () {
   if (transactionType === 'card') {
     $('*[id*=field_transaction]').show();
     $('*[id*=field_transaction_iban]').hide();
-  }
-  if (transactionType === 'app') {
+  } else if (transactionType === 'app') {
     $('*[id*=field_transaction]').show();
     $('*[id*=field_transaction_card]').hide();
-  }
-  if (transactionType === 'none') {
+  } else if (transactionType === 'none') {
     $('*[id*=field_transaction]').hide();
     $('#field_transaction_type').show();
-    $('#transaction_type_error').show();
+    $('#transaction_type_error').slideDown('200', 'easeOutQuad');
   }
 });
 
@@ -260,16 +276,18 @@ $('#continue-transaction').on('click', function () {
     if (transactionAmount && transactionDate && firstSixDigits && lastFourDigits) {
       $('#transaction').hide();
       $('#fraudster').show();
+    } else {
+      checkInputs();
     }
-  }
-  if (transactionType === 'app') {
+  } else if (transactionType === 'app') {
     if (transactionAmount && transactionDate && ibanSending && ibanReceiving) {
       $('#transaction').hide();
       $('#fraudster').show();
+    } else {
+      checkInputs();
     }
-  }
-  if (transactionType === 'none') {
-    $('.form_error').hide();
+  } else if (transactionType === 'none') {
+    $('#transaction_type_error').slideDown('200', 'easeOutQuad');
   }
 });
 
@@ -292,8 +310,8 @@ $('#continue-fraudster').on('click', function () {
 
   if (
     fraudType &&
-    fraudsterName &&
-    (fraudsterEmail ||
+    (fraudsterName ||
+      fraudsterEmail ||
       fraudsterPhoneNumber ||
       fraudsterWebsite ||
       fraudsterInstagram ||
@@ -304,6 +322,9 @@ $('#continue-fraudster').on('click', function () {
     $('#submit').show();
     $('*[id*=field_issue]').show();
     $('#field_issue_additional-comment').hide();
+    $('#field_issue_police-report_file').hide();
+  } else {
+    checkInputs();
   }
 });
 
@@ -315,7 +336,7 @@ $('#previous-phishing').on('click', function () {
 });
 
 // Conditionally continue on "continue" button click
-$('#continue-fraudster').on('click', function () {
+$('#continue-phishing').on('click', function () {
   var phishingName = $('#phishing_name').val();
   var phishingEmail = $('#phishing_email').val();
   var phishingPhoneNumber = $('#phishing_phone-number').val();
@@ -335,8 +356,11 @@ $('#continue-fraudster').on('click', function () {
   ) {
     $('#phishing').hide();
     $('#issue').show();
+    $('#submit').show();
     $('*[id*=field_issue]').hide();
     $('#field_issue_additional-comment').show();
+  } else {
+    checkInputs();
   }
 });
 
@@ -351,41 +375,41 @@ $('#hacked-5-elaboration').hide();
 // Conditional visibility for elaboration fields
 $('input[name=Hacked-Shared-Credentials]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#hacked-1-elaboration').show();
+    $('#hacked-1-elaboration').slideDown('200', 'easeOutQuad');
   } else {
-    $('#hacked-1-elaboration').hide();
+    $('#hacked-1-elaboration').slideUp('100', 'easeInQuad');
   }
 });
 
 $('input[name=Hacked-Unusual-Links]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#hacked-2-elaboration').show();
+    $('#hacked-2-elaboration').slideDown('200', 'easeOutQuad');
   } else {
-    $('#hacked-2-elaboration').hide();
+    $('#hacked-2-elaboration').slideUp('100', 'easeInQuad');
   }
 });
 
 $('input[name=Hacked-Guided-Payment]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#hacked-3-elaboration').show();
+    $('#hacked-3-elaboration').slideDown('200', 'easeOutQuad');
   } else {
-    $('#hacked-3-elaboration').hide();
+    $('#hacked-3-elaboration').slideUp('100', 'easeInQuad');
   }
 });
 
 $('input[name=Hacked-Account-Access]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#hacked-4-elaboration').show();
+    $('#hacked-4-elaboration').slideDown('200', 'easeOutQuad');
   } else {
-    $('#hacked-4-elaboration').hide();
+    $('#hacked-4-elaboration').slideUp('100', 'easeInQuad');
   }
 });
 
 $('input[name=Hacked-Unauthorized-Phone-Use]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#hacked-5-elaboration').show();
+    $('#hacked-5-elaboration').slideDown('200', 'easeOutQuad');
   } else {
-    $('#hacked-5-elaboration').hide();
+    $('#hacked-5-elaboration').slideUp('100', 'easeInQuad');
   }
 });
 
@@ -409,28 +433,40 @@ $('#continue-hacked').on('click', function () {
     $('#submit').show();
     $('*[id*=field_issue]').show();
     $('#field_issue_additional-comment').hide();
+    $('#field_issue_police-report_file').hide();
+  } else {
+    checkInputs();
   }
 });
 
 // STEP: COMPLAINT
 // Hide all elaboration fields
-$('#complaint_user_error').hide();
+$('#complaint_got-support_error').hide();
 $('#complaint_support-responded_error').hide();
+$('#complaint_user_error').hide();
 
 // Conditional visibility for elaboration fields
-$('input[name=Complaint-User]').on('change', function () {
-  if ($('input[name=Complaint-User]:checked').val() === 'no') {
-    $('#complaint_user_error').show();
+$('input[name=Complaint-Got-Support]').on('change', function () {
+  if ($('input[name=Complaint-Got-Support]:checked').val() === 'no') {
+    $('#complaint_got-support_error').slideDown('200', 'easeOutQuad');
   } else {
-    $('#complaint_user_error').hide();
+    $('#complaint_got-support_error').slideUp('100', 'easeInQuad');
   }
 });
 
 $('input[name=Complaint-Support-Responded]').on('change', function () {
   if ($('input[name=Complaint-Support-Responded]:checked').val() === 'no') {
-    $('#complaint_support-responded_error').show();
+    $('#complaint_support-responded_error').slideDown('200', 'easeOutQuad');
   } else {
-    $('#complaint_support-responded_error').hide();
+    $('#complaint_support-responded_error').slideUp('100', 'easeInQuad');
+  }
+});
+
+$('input[name=Complaint-User]').on('change', function () {
+  if ($('input[name=Complaint-User]:checked').val() === 'no') {
+    $('#complaint_user_error').slideDown('200', 'easeOutQuad');
+  } else {
+    $('#complaint_user_error').slideUp('100', 'easeInQuad');
   }
 });
 
@@ -439,20 +475,25 @@ $('input[name=Complaint-Support-Responded]').on('change', function () {
 var issueExplanation = $('#issue_explanation').val();
 var policeReport = $('input[name="Police-Report"]:checked').val();
 
+// Update "issueExplanation" variable on change
+$('textarea[name="Issue-Explanation"]').on('keyup', function () {
+  issueExplanation = $('textarea[name="Issue-Explanation"]').val();
+});
+
 // Update "policeReport" variable on change
 $('input[name="Police-Report"]').on('change', function () {
   policeReport = $('input[name="Police-Report"]:checked').val();
 });
 
 // Hide police report upload field fields
-$('#field_issue_police-report_file').hide();
+// $('#field_issue_police-report_file').hide();
 
 // Conditional visibility for police report upload field
 $('input[name=Police-Report]').on('change', function () {
   if ($(this).val() === 'yes') {
-    $('#field_issue_police-report_file').show();
+    $('#field_issue_police-report_file').slideDown('200', 'easeOutQuad');
   } else {
-    $('#field_issue_police-report_file').hide();
+    $('#field_issue_police-report_file').slideUp('100', 'easeInQuad');
   }
 });
 
@@ -462,18 +503,15 @@ $('#previous-submit').on('click', function () {
     $('#issue').hide();
     $('#submit').hide();
     $('#fraudster').show();
-  }
-  if (situation === 'phishing') {
+  } else if (situation === 'phishing') {
     $('#issue').hide();
     $('#submit').hide();
     $('#phishing').show();
-  }
-  if (situation === 'hacked') {
+  } else if (situation === 'hacked') {
     $('#issue').hide();
     $('#submit').hide();
     $('#hacked').show();
-  }
-  if (situation === 'complaint') {
+  } else if (situation === 'complaint') {
     $('#complaint').hide();
     $('#submit').hide();
     $('#contact').show();
@@ -483,73 +521,61 @@ $('#previous-submit').on('click', function () {
 // Conditionally show real submit button
 $('#form_submit').hide();
 
-$('#terms_complaint').on('change', () => {
-  if ($('#terms_complaint').is(':checked') && $('#terms_report').is(':checked')) {
-    $('#form_submit_disabled').hide();
-    $('#form_submit').show();
-  } else {
-    $('#form_submit_disabled').show();
-    $('#form_submit').hide();
-  }
-});
+$('#issue, #complaint, #submit')
+  .find('input, textarea')
+  .on('change', () => {
+    if (situation === 'fraud') {
+      if (issueExplanation && policeReport && $('#terms_report').is(':checked')) {
+        $('#form_submit_disabled').hide();
+        $('#form_submit').show();
+      } else {
+        $('#form_submit_disabled').show();
+        $('#form_submit').hide();
+      }
+    } else if (situation === 'phishing') {
+      if ($('#terms_report').is(':checked')) {
+        $('#form_submit_disabled').hide();
+        $('#form_submit').show();
+      } else {
+        $('#form_submit_disabled').show();
+        $('#form_submit').hide();
+      }
+    } else if (situation === 'hacked') {
+      if (policeReport && $('#terms_report').is(':checked')) {
+        $('#form_submit_disabled').hide();
+        $('#form_submit').show();
+      } else {
+        $('#form_submit_disabled').show();
+        $('#form_submit').hide();
+      }
+    } else if (situation === 'complaint') {
+      var bunqUser = $('input[name="Complaint-User"]:checked').val();
+      var gotSupport = $('input[name="Complaint-Got-Support"]:checked').val();
+      var supportResponded = $('input[name="Complaint-Support-Responded"]:checked').val();
+      var accountType = $('input[name="Complaint-Account-Type"]:checked').val();
+      var incidentDate = $('#complaint_date').val();
+      var complaintMessage = $('#complaint_message').val();
 
-$('#terms_report').on('change', () => {
-  if (situation === 'fraud') {
-    if (issueExplanation && policeReport && $('#terms_report').is(':checked')) {
-      $('#form_submit_disabled').hide();
-      $('#form_submit').show();
-    } else {
-      $('#form_submit_disabled').show();
-      $('#form_submit').hide();
+      if (
+        bunqUser === 'yes' &&
+        gotSupport === 'yes' &&
+        supportResponded === 'yes' &&
+        accountType &&
+        incidentDate &&
+        complaintMessage &&
+        $('#terms_complaint').is(':checked') &&
+        $('#terms_report').is(':checked')
+      ) {
+        $('#form_submit_disabled').hide();
+        $('#form_submit').show();
+      } else {
+        $('#form_submit_disabled').show();
+        $('#form_submit').hide();
+      }
     }
-  }
-  if (situation === 'phishing') {
-    if ($('#terms_report').is(':checked')) {
-      $('#form_submit_disabled').hide();
-      $('#form_submit').show();
-    } else {
-      $('#form_submit_disabled').show();
-      $('#form_submit').hide();
-    }
-  }
-  if (situation === 'hacked') {
-    if (policeReport && $('#terms_report').is(':checked')) {
-      $('#form_submit_disabled').hide();
-      $('#form_submit').show();
-    } else {
-      $('#form_submit_disabled').show();
-      $('#form_submit').hide();
-    }
-  }
-  if (situation === 'complaint') {
-    var bunqUser = $('input[name="Complaint-User"]:checked').val();
-    var gotSupport = $('input[name="Complaint-Got-Support"]:checked').val();
-    var supportResponded = $('input[name="Complaint-Support-Responded"]:checked').val();
-    var accountType = $('input[name="Complaint-Account-Type"]:checked').val();
-    var incidentDate = $('#complaint_date').val();
-    var complaintMessage = $('#complaint_message').val();
-
-    if (
-      bunqUser === 'yes' &&
-      gotSupport === 'yes' &&
-      supportResponded === 'yes' &&
-      accountType &&
-      incidentDate &&
-      complaintMessage &&
-      $('#terms_complaint').is(':checked') &&
-      $('#terms_report').is(':checked')
-    ) {
-      $('#form_submit_disabled').hide();
-      $('#form_submit').show();
-    } else {
-      $('#form_submit_disabled').show();
-      $('#form_submit').hide();
-    }
-  }
-});
+  });
 
 $('#form_submit_disabled').on('click', function () {
   checkInputs();
   $(this).closest('.form_section').find('.form_error').show();
 });
-
