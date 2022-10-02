@@ -432,7 +432,7 @@ $('#continue-hacked').on('click', function () {
     $('#issue').show();
     $('#submit').show();
     $('*[id*=field_issue]').show();
-    $('#field_issue_additional-comment').hide();
+    $('#field_issue_explanation').hide();
     $('#field_issue_police-report_file').hide();
   } else {
     checkInputs();
@@ -440,12 +440,13 @@ $('#continue-hacked').on('click', function () {
 });
 
 // STEP: COMPLAINT
-// Hide all elaboration fields
+// Hide all conditional fields
 $('#complaint_got-support_error').hide();
 $('#complaint_support-responded_error').hide();
 $('#complaint_user_error').hide();
+$('*[id*=field_complaint_account]').hide();
 
-// Conditional visibility for elaboration fields
+// Conditional visibility for conditional elements
 $('input[name=Complaint-Got-Support]').on('change', function () {
   if ($('input[name=Complaint-Got-Support]:checked').val() === 'no') {
     $('#complaint_got-support_error').slideDown('200', 'easeOutQuad');
@@ -467,6 +468,14 @@ $('input[name=Complaint-User]').on('change', function () {
     $('#complaint_user_error').slideDown('200', 'easeOutQuad');
   } else {
     $('#complaint_user_error').slideUp('100', 'easeInQuad');
+  }
+});
+
+$('input[name=Complaint-User]').on('change', function () {
+  if (bunqUser === 'no' && $('input[name=Complaint-User]:checked').val() === 'yes') {
+    $('*[id*=field_complaint_account]').slideDown('200', 'easeOutQuad');
+  } else {
+    $('*[id*=field_complaint_account]').slideUp('100', 'easeInQuad');
   }
 });
 
