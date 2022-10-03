@@ -577,7 +577,7 @@ $('#issue, #phishing, #complaint, #submit')
         $('#form_submit').hide();
       }
     } else if (situation === 'complaint') {
-      var bunqUser = $('input[name="Complaint-User"]:checked').val();
+      var wasUser = $('input[name="Complaint-User"]:checked').val();
       var gotSupport = $('input[name="Complaint-Got-Support"]:checked').val();
       var supportResponded = $('input[name="Complaint-Support-Responded"]:checked').val();
       var accountType = $('input[name="Complaint-Account-Type"]:checked').val();
@@ -585,7 +585,7 @@ $('#issue, #phishing, #complaint, #submit')
       var complaintMessage = $('#complaint_message').val();
 
       if (
-        bunqUser === 'yes' &&
+        wasUser === 'yes' &&
         gotSupport === 'yes' &&
         supportResponded === 'yes' &&
         accountType &&
