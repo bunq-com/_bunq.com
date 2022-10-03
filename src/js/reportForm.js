@@ -151,7 +151,7 @@ $('#continue-contact').on('click', function () {
   if (situation === 'fraud') {
     if (bunqUser === 'yes') {
       if (!accountEmail) {
-        $('#contact_email-error').show();
+        $('#contact_email-error').slideDown('200', 'easeOutQuad');
       }
       if (contactName && accountEmail) {
         $('#contact').hide();
@@ -172,11 +172,12 @@ $('#continue-contact').on('click', function () {
   } else if (situation === 'phishing') {
     if (bunqUser === 'yes') {
       if (!accountEmail) {
-        $('#contact_email-error').show();
+        $('#contact_email-error').slideDown('200', 'easeOutQuad');
       }
       if (contactName && accountEmail) {
         $('#contact').hide();
         $('#phishing').show();
+        $('#submit').show();
       } else {
         checkInputs();
       }
@@ -184,6 +185,7 @@ $('#continue-contact').on('click', function () {
       if (contactName && contactEmail) {
         $('#contact').hide();
         $('#phishing').show();
+        $('#submit').show();
       } else {
         checkInputs();
       }
@@ -193,7 +195,7 @@ $('#continue-contact').on('click', function () {
   } else if (situation === 'complaint') {
     if (bunqUser === 'yes') {
       if (!accountEmail) {
-        $('#contact_email-error').show();
+        $('#contact_email-error').slideDown('200', 'easeOutQuad');
       }
       if (contactName && accountEmail) {
         $('#contact').hide();
@@ -215,7 +217,7 @@ $('#continue-contact').on('click', function () {
     }
   } else if (situation === 'hacked') {
     if (!accountEmail) {
-      $('#contact_email-error').show();
+      $('#contact_email-error').slideDown('200', 'easeOutQuad');
     }
     if (contactName && accountEmail) {
       $('#contact').hide();
@@ -330,39 +332,39 @@ $('#continue-fraudster').on('click', function () {
 
 // STEP: PHISHING
 // Go back on "previous" button click
-$('#previous-phishing').on('click', function () {
-  $('#phishing').hide();
-  $('#contact').show();
-});
+// $('#previous-phishing').on('click', function () {
+//   $('#phishing').hide();
+//   $('#contact').show();
+// });
 
 // Conditionally continue on "continue" button click
-$('#continue-phishing').on('click', function () {
-  var phishingName = $('#phishing_name').val();
-  var phishingEmail = $('#phishing_email').val();
-  var phishingPhoneNumber = $('#phishing_phone-number').val();
-  var phishingWebsite = $('#phishing_website').val();
-  var phishingInstagram = $('#phishing_instagram').val();
-  var phishingTwitter = $('#phishing_twitter').val();
-  var phishingMessage = $('#phishing_message').val();
+// $('#continue-phishing').on('click', function () {
+//   var phishingName = $('#phishing_name').val();
+//   var phishingEmail = $('#phishing_email').val();
+//   var phishingPhoneNumber = $('#phishing_phone-number').val();
+//   var phishingWebsite = $('#phishing_website').val();
+//   var phishingInstagram = $('#phishing_instagram').val();
+//   var phishingTwitter = $('#phishing_twitter').val();
+//   var phishingMessage = $('#phishing_message').val();
 
-  if (
-    phishingMessage &&
-    (phishingName ||
-      phishingEmail ||
-      phishingPhoneNumber ||
-      phishingWebsite ||
-      phishingInstagram ||
-      phishingTwitter)
-  ) {
-    $('#phishing').hide();
-    $('#issue').show();
-    $('#submit').show();
-    $('*[id*=field_issue]').hide();
-    $('#field_issue_additional-comment').show();
-  } else {
-    checkInputs();
-  }
-});
+//   if (
+//     phishingMessage &&
+//     (phishingName ||
+//       phishingEmail ||
+//       phishingPhoneNumber ||
+//       phishingWebsite ||
+//       phishingInstagram ||
+//       phishingTwitter)
+//   ) {
+//     $('#phishing').hide();
+//     $('#issue').show();
+//     $('#submit').show();
+//     $('*[id*=field_issue]').hide();
+//     $('#field_issue_additional-comment').show();
+//   } else {
+//     checkInputs();
+//   }
+// });
 
 // STEP: HACKED
 // Hide all elaboration fields
@@ -513,9 +515,9 @@ $('#previous-submit').on('click', function () {
     $('#submit').hide();
     $('#fraudster').show();
   } else if (situation === 'phishing') {
-    $('#issue').hide();
+    $('#phishing').hide();
     $('#submit').hide();
-    $('#phishing').show();
+    $('#contact').show();
   } else if (situation === 'hacked') {
     $('#issue').hide();
     $('#submit').hide();
@@ -530,7 +532,7 @@ $('#previous-submit').on('click', function () {
 // Conditionally show real submit button
 $('#form_submit').hide();
 
-$('#issue, #complaint, #submit')
+$('#issue, #phishing, #complaint, #submit')
   .find('input, textarea')
   .on('change', () => {
     if (situation === 'fraud') {
@@ -542,7 +544,24 @@ $('#issue, #complaint, #submit')
         $('#form_submit').hide();
       }
     } else if (situation === 'phishing') {
-      if ($('#terms_report').is(':checked')) {
+      var phishingName = $('#phishing_name').val();
+      var phishingEmail = $('#phishing_email').val();
+      var phishingPhoneNumber = $('#phishing_phone-number').val();
+      var phishingWebsite = $('#phishing_website').val();
+      var phishingInstagram = $('#phishing_instagram').val();
+      var phishingTwitter = $('#phishing_twitter').val();
+      var phishingMessage = $('#phishing_message').val();
+
+      if (
+        phishingMessage &&
+        (phishingName ||
+          phishingEmail ||
+          phishingPhoneNumber ||
+          phishingWebsite ||
+          phishingInstagram ||
+          phishingTwitter) &&
+        $('#terms_report').is(':checked')
+      ) {
         $('#form_submit_disabled').hide();
         $('#form_submit').show();
       } else {
