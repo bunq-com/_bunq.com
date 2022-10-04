@@ -150,10 +150,9 @@ $('#continue-contact').on('click', function () {
   var contactName = $('#contact_name').val();
   var contactEmail = $('#contact_email').val();
 
-  if (!contactEmail) {
-    if (bunqUser === yes) {
-      $('#contact_email-error').slideDown('200', 'easeOutQuad');
-    }
+  if (bunqUser === 'yes' && !contactEmail) {
+    $('#contact_email-error').slideDown('200', 'easeOutQuad');
+    checkInputs();
   }
   if (contactName && contactEmail) {
     if (situation === 'fraud') {
