@@ -149,85 +149,28 @@ $('#previous-contact').on('click', function () {
 $('#continue-contact').on('click', function () {
   var contactName = $('#contact_name').val();
   var contactEmail = $('#contact_email').val();
-  var accountEmail = $('#account_email').val();
 
-  if (situation === 'fraud') {
-    if (bunqUser === 'yes') {
-      if (!accountEmail) {
-        $('#contact_email-error').slideDown('200', 'easeOutQuad');
-      }
-      if (contactName && accountEmail) {
-        $('#contact').hide();
-        $('#transaction').show();
-      } else {
-        checkInputs();
-      }
-    } else if (bunqUser === 'no') {
-      if (contactName && contactEmail) {
-        $('#contact').hide();
-        $('#transaction').show();
-      } else {
-        checkInputs();
-      }
-    } else {
-      checkInputs();
-    }
-  } else if (situation === 'phishing') {
-    if (bunqUser === 'yes') {
-      if (!accountEmail) {
-        $('#contact_email-error').slideDown('200', 'easeOutQuad');
-      }
-      if (contactName && accountEmail) {
-        $('#contact').hide();
-        $('#phishing').show();
-        $('#submit').show();
-      } else {
-        checkInputs();
-      }
-    } else if (bunqUser === 'no') {
-      if (contactName && contactEmail) {
-        $('#contact').hide();
-        $('#phishing').show();
-        $('#submit').show();
-      } else {
-        checkInputs();
-      }
-    } else {
-      checkInputs();
-    }
-  } else if (situation === 'complaint') {
-    if (bunqUser === 'yes') {
-      if (!accountEmail) {
-        $('#contact_email-error').slideDown('200', 'easeOutQuad');
-      }
-      if (contactName && accountEmail) {
-        $('#contact').hide();
-        $('#complaint').show();
-        $('#submit').show();
-      } else {
-        checkInputs();
-      }
-    } else if (bunqUser === 'no') {
-      if (contactName && contactEmail) {
-        $('#contact').hide();
-        $('#complaint').show();
-        $('#submit').show();
-      } else {
-        checkInputs();
-      }
-    } else {
-      checkInputs();
-    }
-  } else if (situation === 'hacked') {
-    if (!accountEmail) {
-      $('#contact_email-error').slideDown('200', 'easeOutQuad');
-    }
-    if (contactName && accountEmail) {
+  if (!contactEmail) {
+    $('#contact_email-error').slideDown('200', 'easeOutQuad');
+  }
+  if (contactName && contactEmail) {
+    if (situation === 'fraud') {
+      $('#contact').hide();
+      $('#transaction').show();
+    } else if (situation === 'phishing') {
+      $('#contact').hide();
+      $('#phishing').show();
+      $('#submit').show();
+    } else if (situation === 'complaint') {
+      $('#contact').hide();
+      $('#complaint').show();
+      $('#submit').show();
+    } else if (situation === 'hacked') {
       $('#contact').hide();
       $('#hacked').show();
-    } else {
-      checkInputs();
     }
+  } else {
+    checkInputs();
   }
 });
 
