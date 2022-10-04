@@ -333,42 +333,6 @@ $('#continue-fraudster').on('click', function () {
   }
 });
 
-// STEP: PHISHING
-// Go back on "previous" button click
-// $('#previous-phishing').on('click', function () {
-//   $('#phishing').hide();
-//   $('#contact').show();
-// });
-
-// Conditionally continue on "continue" button click
-// $('#continue-phishing').on('click', function () {
-//   var phishingName = $('#phishing_name').val();
-//   var phishingEmail = $('#phishing_email').val();
-//   var phishingPhoneNumber = $('#phishing_phone-number').val();
-//   var phishingWebsite = $('#phishing_website').val();
-//   var phishingInstagram = $('#phishing_instagram').val();
-//   var phishingTwitter = $('#phishing_twitter').val();
-//   var phishingMessage = $('#phishing_message').val();
-
-//   if (
-//     phishingMessage &&
-//     (phishingName ||
-//       phishingEmail ||
-//       phishingPhoneNumber ||
-//       phishingWebsite ||
-//       phishingInstagram ||
-//       phishingTwitter)
-//   ) {
-//     $('#phishing').hide();
-//     $('#issue').show();
-//     $('#submit').show();
-//     $('*[id*=field_issue]').hide();
-//     $('#field_issue_additional-comment').show();
-//   } else {
-//     checkInputs();
-//   }
-// });
-
 // STEP: HACKED
 // Hide all elaboration fields
 $('#hacked-1-elaboration').hide();
