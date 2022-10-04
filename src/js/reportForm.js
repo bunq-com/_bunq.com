@@ -446,7 +446,8 @@ $('#continue-hacked').on('click', function () {
 $('#complaint_got-support_error').hide();
 $('#complaint_support-responded_error').hide();
 $('#complaint_user_error').hide();
-$('*[id*=field_complaint_account]').hide();
+$('#field_complaint_account-email').hide();
+$('#field_complaint_account-phone').hide();
 
 // Conditional visibility for conditional elements
 $('input[name=Complaint-Got-Support]').on('change', function () {
@@ -475,9 +476,11 @@ $('input[name=Complaint-User]').on('change', function () {
 
 $('input[name=Complaint-User]').on('change', function () {
   if (bunqUser === 'no' && $('input[name=Complaint-User]:checked').val() === 'yes') {
-    $('*[id*=field_complaint_account]').slideDown('200', 'easeOutQuad');
+    $('#field_complaint_account-email').slideDown('200', 'easeOutQuad');
+    $('#field_complaint_account-phone').slideDown('200', 'easeOutQuad');
   } else {
-    $('*[id*=field_complaint_account]').slideUp('100', 'easeInQuad');
+    $('#field_complaint_account-email').slideUp('100', 'easeInQuad');
+    $('#field_complaint_account-phone').slideUp('100', 'easeInQuad');
   }
 });
 
