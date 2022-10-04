@@ -98,18 +98,19 @@ $('#continue-situation').on('click', function () {
       $('#field_bunq-user').show();
       if (!bunqUser) {
         $('#field_contact_email').hide();
-        $('#field_account_email').hide();
       } else if (bunqUser === 'yes') {
-        $('#field_contact_email').hide();
-        $('#field_account_email').show();
+        $('#field_contact_email').show();
+        $('#label_contact_email').hide();
+        $('#label_account_email').show();
       } else if (bunqUser === 'no') {
         $('#field_contact_email').show();
-        $('#field_account_email').hide();
+        $('#label_contact_email').show();
+        $('#label_account_email').hide();
       }
     } else if (situation === 'hacked') {
       $('#field_bunq-user').hide();
-      $('#field_contact_email').hide();
-      $('#field_account_email').show();
+      $('#label_contact_email').hide();
+      $('#label_account_email').show();
     }
   } else {
     checkInputs();
@@ -128,11 +129,13 @@ $('input[name="bunq-User"]').on('change', function () {
 // Conditional visibility for "contact" fields
 $('input[name="bunq-User"]').on('change', function () {
   if (bunqUser === 'yes') {
-    $('#field_contact_email').hide();
-    $('#field_account_email').show();
+    $('#field_contact_email').show();
+    $('#label_contact_email').hide();
+    $('#label_account_email').show();
   } else if (bunqUser === 'no') {
     $('#field_contact_email').show();
-    $('#field_account_email').hide();
+    $('#label_contact_email').show();
+    $('#label_account_email').hide();
   }
 });
 
