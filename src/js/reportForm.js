@@ -151,7 +151,9 @@ $('#continue-contact').on('click', function () {
   var contactEmail = $('#contact_email').val();
 
   if (!contactEmail) {
-    $('#contact_email-error').slideDown('200', 'easeOutQuad');
+    if (bunqUser === yes) {
+      $('#contact_email-error').slideDown('200', 'easeOutQuad');
+    }
   }
   if (contactName && contactEmail) {
     if (situation === 'fraud') {
