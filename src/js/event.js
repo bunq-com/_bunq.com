@@ -1,5 +1,5 @@
 // Set the date we're counting down to, the time in PST
-const countDownDate = new Date('Oct 11, 2022 20:30:00 GMT+2');
+const countDownDate = new Date('Oct 11, 2022 20:20:00 GMT+2');
 
 // Update the count down every 1 second
 const x = setInterval(function () {
