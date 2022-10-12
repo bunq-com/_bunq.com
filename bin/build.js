@@ -14,7 +14,6 @@ const entryPoints = [
   'src/js/main.js',
   'src/js/mCookies.js',
   'src/js/overrider.js',
-  'src/js/report.js',
   'src/js/reportForm.js',
   'src/js/tooltip.js',
   'src/js/tabsCard.js',

@@ -1,1 +1,1 @@
-"use strict";(()=>{var e=$(".blog-4_mask").height();$(".blog-cards_item").each(function(){$(".w-dyn-item .blog-cards_item").height(e)});})();
+"use strict";(()=>{var e=$(".blog-slider_mask").height();$(".blog-card_component").each(function(){$(".w-dyn-item .blog-card_component").height(e)});})();
