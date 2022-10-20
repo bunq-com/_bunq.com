@@ -52,6 +52,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@finsweet/ts-utils": "^0.33.1"
+    "@finsweet/ts-utils": "^0.33.1",
+    "module-alias": "^2.2.2"
   }
 }

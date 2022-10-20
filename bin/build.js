@@ -18,6 +18,7 @@ const entryPoints = [
   'src/js/tooltip.js',
   'src/js/tabsCard.js',
   'src/js/blogSection.js',
+  'src/js/benefitPage.js',
 ];
 
 /**
