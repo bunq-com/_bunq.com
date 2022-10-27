@@ -4,14 +4,46 @@ $('.form_error-instruction').hide();
 $('.form_error-message').hide();
 $('.form_error').hide();
 
+// PREVENT SUBMIT ON ENTER
+$('form input').on('keypress', function (e) {
+  return e.which !== 13;
+});
+
+// VALIDATION FUNCTIONS
+// Validate email
+function validateEmail($email) {
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  return emailReg.test($email);
+}
+
+// Validate phone
+function validatePhone($phone) {
+  var phoneReg = /^(\+[1-9][0-9]*(\([0-9]*\)|-[0-9]*-))?[0]?[1-9][0-9\- ]*$/;
+  return phoneReg.test($phone);
+}
+
 // HANDLING INPUTS
 // Create function to add required class to- and show error for empty inputs
 function checkInputs() {
-  $("input[type='text'], input[type='number'], input[type='email'], textarea")
+  $("input[type='text'], textarea")
     .filter(':visible')
     .each(function () {
       if (!$(this).val()) {
         $(this).addClass('required');
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
+      }
+    });
+  $("input[type='email']")
+    .filter(':visible')
+    .each(function () {
+      if (!$(this).val()) {
+        $(this).addClass('required');
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
+      }
+      var inputValue = $(this).val();
+      if (inputValue && !validateEmail(inputValue)) {
+        $(this).addClass('required');
+        $(this).siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
         $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
@@ -20,6 +52,26 @@ function checkInputs() {
     .each(function () {
       if (!$(this).val()) {
         $(this).closest('.field-phone_wrapper').addClass('required');
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
+      }
+      var inputValue = $(this).val();
+      if (inputValue && !validatePhone(inputValue)) {
+        $(this).closest('.field-phone_wrapper').addClass('required');
+        $(this).parent().siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
+      }
+    });
+  $("input[type='number']")
+    .filter(':visible')
+    .each(function () {
+      if (!$(this).val()) {
+        $(this).addClass('required');
+        $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
+      }
+      var inputValue = $(this).val();
+      if (inputValue <= 0) {
+        $(this).addClass('required');
+        $(this).siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
         $(this).closest('.form_section').find('.form_error').slideDown('200', 'easeOutQuad');
       }
     });
@@ -51,6 +103,31 @@ function checkInputs() {
       }
     });
 }
+
+// Show validation errors on blur
+$("input[type='email']").on('blur', function () {
+  var inputValue = $(this).val();
+  if (inputValue && !validateEmail(inputValue)) {
+    $(this).addClass('required');
+    $(this).siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
+  }
+});
+
+$("input[type='tel']").on('blur', function () {
+  var inputValue = $(this).val();
+  if (inputValue && !validatePhone(inputValue)) {
+    $(this).closest('.field-phone_wrapper').addClass('required');
+    $(this).parent().siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
+  }
+});
+
+$("input[type='number']").on('blur', function () {
+  var inputValue = $(this).val();
+  if (inputValue <= 0) {
+    $(this).addClass('required');
+    $(this).siblings('.form_error-instruction').slideDown('200', 'easeOutQuad');
+  }
+});
 
 // Remove required class from input when clicked and remove errors
 $('input, textarea, .form_radio').on('click', function () {
@@ -154,7 +231,7 @@ $('#continue-contact').on('click', function () {
     $('#contact_email-error').slideDown('200', 'easeOutQuad');
     checkInputs();
   }
-  if (contactName && contactEmail) {
+  if (contactName && contactEmail && validateEmail(contactEmail)) {
     if (situation === 'fraud') {
       $('#contact').hide();
       $('#transaction').show();
@@ -266,12 +343,16 @@ $('#continue-fraudster').on('click', function () {
       fraudsterInstagram ||
       fraudsterTwitter)
   ) {
-    $('#fraudster').hide();
-    $('#issue').show();
-    $('#submit').show();
-    $('*[id*=field_issue]').show();
-    $('#field_issue_additional-comment').hide();
-    $('#field_issue_police-report_file').hide();
+    if (fraudsterEmail && !validateEmail(fraudsterEmail)) {
+      checkInputs();
+    } else {
+      $('#fraudster').hide();
+      $('#issue').show();
+      $('#submit').show();
+      $('*[id*=field_issue]').show();
+      $('#field_issue_additional-comment').hide();
+      $('#field_issue_police-report_file').hide();
+    }
   } else {
     checkInputs();
   }
@@ -469,7 +550,7 @@ $('#issue, #phishing, #complaint, #submit')
       if (
         phishingMessage &&
         (phishingName ||
-          phishingEmail ||
+          (phishingEmail && validateEmail(phishingEmail)) ||
           phishingPhoneNumber ||
           phishingWebsite ||
           phishingInstagram ||
