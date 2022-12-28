@@ -365,6 +365,7 @@ $('#hacked-2-elaboration').hide();
 $('#hacked-3-elaboration').hide();
 $('#hacked-4-elaboration').hide();
 $('#hacked-5-elaboration').hide();
+$('#hacked-6-elaboration').hide();
 
 // Conditional visibility for elaboration fields
 $('input[name=Hacked-Shared-Credentials]').on('change', function () {
@@ -407,6 +408,14 @@ $('input[name=Hacked-Unauthorized-Phone-Use]').on('change', function () {
   }
 });
 
+$('input[name=Hacked-Unauthorized-Transactions]').on('change', function () {
+  if ($(this).val() === 'yes') {
+    $('#hacked-6-elaboration').slideDown('200', 'easeOutQuad');
+  } else {
+    $('#hacked-6-elaboration').slideUp('100', 'easeInQuad');
+  }
+});
+
 // Go back on "previous" button click
 $('#previous-hacked').on('click', function () {
   $('#hacked').hide();
@@ -420,8 +429,16 @@ $('#continue-hacked').on('click', function () {
   var guidedPayment = $('input[name="Hacked-Guided-Payment"]:checked').val();
   var accountAccess = $('input[name="Hacked-Account-Access"]:checked').val();
   var unauthorizedPhoneUse = $('input[name="Hacked-Unauthorized-Phone-Use"]:checked').val();
+  var unauthorizedTransactions = $('input[name="Hacked-Unauthorized-Transactions"]:checked').val();
 
-  if (sharedCredentials && unusualLinks && guidedPayment && accountAccess && unauthorizedPhoneUse) {
+  if (
+    sharedCredentials &&
+    unusualLinks &&
+    guidedPayment &&
+    accountAccess &&
+    unauthorizedPhoneUse &&
+    unauthorizedTransactions
+  ) {
     $('#hacked').hide();
     $('#issue').show();
     $('#submit').show();

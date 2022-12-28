@@ -2,7 +2,7 @@ $('.content-tabs_image-wrapper-mobile').css({ height: '0' });
 
 $('#tab-1').click(function () {
   let click_tab_1 = $(this).data('click_tab_1');
-  if (click_tab_1 == undefined) {
+  if (click_tab_1 === undefined) {
     let button = $(this).children('.content-tabs_button');
     let imageMobile = $(this).children('.content-tabs_image-wrapper-mobile');
 
